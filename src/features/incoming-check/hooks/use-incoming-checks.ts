@@ -1,79 +1,73 @@
 /**
- * Incoming Query Hooks
- * React Query hooks for fetching incoming material data
+ * Incoming Check Query Hooks
+ * React Query hooks for fetching incoming check data
  */
 
 import { useQuery } from '@tanstack/react-query'
-import { getAllIncoming, getIncomingById } from '../services'
-import type { IncomingType, IncomingDetailType } from '../types/incoming.type'
+import { getAllIncomingCheck, getIncomingCheckById } from '../services'
+import type { IncomingCheckType, IncomingCheckDetailType } from '../types/incoming-check.type'
 
 import type { ReactQueryParamType } from '../../../shared/types/react-query-param.types'
 
 import type { ResponseListType, ResponseSingleType } from '../../../shared/types/response.type'
-import type { IncomingFilterType } from '../types/incoming-filter.type'
+import type { IncomingCheckFilterType } from '../types/incoming-check-filter.type'
 import { useDebounce } from '../../../shared/hooks/use-debounce'
-import { INCOMING_QUERY_KEY } from './incoming-key'
+import { INCOMING_CHECK_QUERY_KEY } from './incoming-check-key'
 
 
 interface IListData {
   config?: ReactQueryParamType
-  filter: IncomingFilterType
+  filter: IncomingCheckFilterType
 }
 
-// **GET**: Get all incoming materials with filtering and pagination
-export const useGetIncomings = ({ config, filter }: IListData) => {
+// **GET**: Get all incoming checks with filtering and pagination
+export const useGetIncomingChecks = ({ config, filter }: IListData) => {
   const {
     per_page,
     page,
     search,
-    status,
     start_date,
     end_date,
     created_at_order,
-    plant,
   } = filter
 
   // Debounce search to reduce API calls
   const debouncedSearch = useDebounce(search, 500) // 500ms delay
 
-  return useQuery<ResponseListType<IncomingType[]>, Error>({
+  return useQuery<ResponseListType<IncomingCheckType[]>, Error>({
     queryKey: [
-      INCOMING_QUERY_KEY,
+      INCOMING_CHECK_QUERY_KEY,
       {
         page,
         per_page,
         search: debouncedSearch,
-        status,
         start_date,
         end_date,
         created_at_order,
-        plant,
       },
     ],
     queryFn: () =>
-      getAllIncoming({
+      getAllIncomingCheck({
         per_page,
         page,
         search: debouncedSearch,
-        status,
         start_date,
         end_date,
         created_at_order,
-        plant,
       }),
     staleTime: 30000, // 30 seconds
     ...config,
   })
 }
 
-// **GET**: Get incoming material detail by ID
-export const useGetIncomingDetail = (
+// **GET**: Get incoming check detail by ID
+export const useGetIncomingCheckDetail = (
   id: number,
   config?: ReactQueryParamType
 ) => {
-  return useQuery<ResponseSingleType<IncomingDetailType>, Error>({
-    queryKey: [INCOMING_QUERY_KEY, 'detail', id],
-    queryFn: () => getIncomingById(id),
+  return useQuery<ResponseSingleType<IncomingCheckDetailType>, Error>({
+    queryKey: [INCOMING_CHECK_QUERY_KEY, 'detail', id],
+    queryFn: () => getIncomingCheckById(id),
     enabled: !!id,
     ...config,
   })

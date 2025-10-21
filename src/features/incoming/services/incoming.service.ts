@@ -3,8 +3,8 @@
  * API functions for managing incoming material data
  */
 
-import { api, incoming_url } from '@/shared/services/api'
-import { filterFalsyParams } from '@/shared/utils/falsy-param'
+import { api, incoming_url } from '../../../shared/services'
+import { filterFalsyParams } from '../../../shared/utils'
 
 import type {
   IncomingFormData,

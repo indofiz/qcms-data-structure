@@ -1,0 +1,1 @@
+export const INCOMING_QUERY_KEY = 'incomings'

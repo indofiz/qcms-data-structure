@@ -15,7 +15,8 @@ import type {
   IncomingApproveFormData,
   IncomingEditFormData,
 } from '../types/incoming.type'
-import type { ResponseSingleType } from '@/shared/types/response.type'
+import type { ResponseSingleType } from '../../../shared/types/response.type'
+import { INCOMING_QUERY_KEY } from './incoming-key'
 
 // **POST**: Create new incoming material
 export const useAddIncoming = () => {
@@ -27,7 +28,7 @@ export const useAddIncoming = () => {
   >({
     mutationFn: createIncoming,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['incomings'] })
+      queryClient.invalidateQueries({ queryKey: [INCOMING_QUERY_KEY] })
       toast.success('Incoming material created successfully')
     },
     onError: () => {
@@ -46,8 +47,8 @@ export const useApproveIncoming = (id: number) => {
   >({
     mutationFn: (data) => approveIncoming(id, data),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['incomings'] })
-      queryClient.invalidateQueries({ queryKey: ['incoming-detail', id] })
+      queryClient.invalidateQueries({ queryKey: [INCOMING_QUERY_KEY] })
+      queryClient.invalidateQueries({ queryKey: [INCOMING_QUERY_KEY,'detail', id] })
       const action = variables.status === 'APPROVED' ? 'approved' : 'rejected'
       toast.success(`Incoming material ${action} successfully`)
     },
@@ -67,8 +68,8 @@ export const useUpdateIncoming = (id: number) => {
   >({
     mutationFn: (data) => updateIncoming(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['incomings'] })
-      queryClient.invalidateQueries({ queryKey: ['incoming-detail', id] })
+      queryClient.invalidateQueries({ queryKey: [INCOMING_QUERY_KEY] })
+      queryClient.invalidateQueries({ queryKey: [INCOMING_QUERY_KEY,'detail', id] })
       toast.success('Incoming material updated successfully')
     },
     onError: () => {

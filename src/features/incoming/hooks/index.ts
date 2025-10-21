@@ -5,3 +5,4 @@
 
 export * from './use-incomings'
 export * from './use-incoming-mutations'
+export * from './incoming-key'
