@@ -73,3 +73,14 @@ export const updateIncoming = async (
     throw error
   }
 }
+
+// Delete incoming material
+export const deleteIncoming = async (id: number) => {
+  try {
+    const response = await api.delete(`${incoming_url}/${id}`)
+    return response.data
+  } catch (error) {
+    console.error('Error deleting incoming material:', error)
+    throw error
+  }
+}
