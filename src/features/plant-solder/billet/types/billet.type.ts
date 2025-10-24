@@ -1,5 +1,4 @@
 import z from "zod"
-import type { UserBasicTypes, UserTypes } from "../../../../shared/types/user.type"
 
 // LIST DATA BILLET (GET ALL METHOD)
 export type BilletType = {
@@ -12,7 +11,7 @@ export type BilletType = {
   weight: number
   width: number
   created_at: string
-  created_by: UserTypes
+  updated_at: string
 }
 
 // DETAIL DATA BILLET (GET BY ID METHOD)
@@ -27,33 +26,17 @@ export type BilletDetailType = {
   width: number
   created_at: string
   updated_at: string
-  created_by: UserBasicTypes
 }
 
 // DATA SUBMIT BILLET (POST METHOD)
 export const BilletCreateSchema = z.object({
   lot_number: z.string().min(1, "Lot number is required"),
   lot_number_billet: z.string().min(1, "Lot number billet is required"),
-  start: z
-    .string()
-    .min(1, "Start is required")
-    .regex(/^\d+$/, "Start must be a positive number"),
-  finish: z
-    .string()
-    .min(1, "Finish is required")
-    .regex(/^\d+$/, "Finish must be a positive number"),
-  billet_qty: z
-    .string()
-    .min(1, "Billet quantity is required")
-    .regex(/^\d+$/, "Billet quantity must be a positive number"),
-  weight: z
-    .string()
-    .min(1, "Weight is required")
-    .regex(/^\d+(\.\d+)?$/, "Weight must be a positive number"),
-  width: z
-    .string()
-    .min(1, "Width is required")
-    .regex(/^\d+(\.\d+)?$/, "Width must be a positive number"),
+  start: z.number().positive("Start must be a positive number"),
+  finish: z.number().positive("Finish must be a positive number"),
+  billet_qty: z.number().positive("Billet quantity must be a positive number"),
+  weight: z.number().positive("Weight must be a positive number"),
+  width: z.number().positive("Width must be a positive number"),
   created_by: z.string().optional(),
 })
 
@@ -63,26 +46,11 @@ export type BilletFormData = z.infer<typeof BilletCreateSchema>
 export const BilletEditSchema = z.object({
   lot_number: z.string().min(1, "Lot number is required"),
   lot_number_billet: z.string().min(1, "Lot number billet is required"),
-  start: z
-    .string()
-    .min(1, "Start is required")
-    .regex(/^\d+$/, "Start must be a positive number"),
-  finish: z
-    .string()
-    .min(1, "Finish is required")
-    .regex(/^\d+$/, "Finish must be a positive number"),
-  billet_qty: z
-    .string()
-    .min(1, "Billet quantity is required")
-    .regex(/^\d+$/, "Billet quantity must be a positive number"),
-  weight: z
-    .string()
-    .min(1, "Weight is required")
-    .regex(/^\d+(\.\d+)?$/, "Weight must be a positive number"),
-  width: z
-    .string()
-    .min(1, "Width is required")
-    .regex(/^\d+(\.\d+)?$/, "Width must be a positive number"),
+  start: z.number().positive("Start must be a positive number"),
+  finish: z.number().positive("Finish must be a positive number"),
+  billet_qty: z.number().positive("Billet quantity must be a positive number"),
+  weight: z.number().positive("Weight must be a positive number"),
+  width: z.number().positive("Width must be a positive number"),
 })
 
 export type BilletEditFormData = z.infer<typeof BilletEditSchema>

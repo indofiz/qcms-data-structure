@@ -1,5 +1,4 @@
 import z from "zod"
-import type { UserBasicTypes, UserTypes } from "../../../../shared/types/user.type"
 import type { ProductionRequestOrderDetailType } from "../../production-request-order/types/production-request-order.type"
 
 
@@ -21,7 +20,7 @@ export type AnalysisType = {
   time: string
   bar_qty: number
   created_at: string
-  created_by: UserTypes
+  updated_at: string
   production_request_order: ProductionRequestOrderReference
 }
 
@@ -35,7 +34,6 @@ export type AnalysisDetailType = {
   bar_qty: number
   created_at: string
   updated_at: string
-  created_by: UserBasicTypes
   production_request_order: ProductionRequestOrderReference
 }
 
@@ -45,10 +43,7 @@ export const AnalysisCreateSchema = z.object({
   lot_number_analysis: z.string().min(1, "Lot number analysis is required"),
   date: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid date format"),
   time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/, "Invalid time format"),
-  bar_qty: z
-    .string()
-    .min(1, "Bar quantity is required")
-    .regex(/^\d+$/, "Bar quantity must be a positive number"),
+  bar_qty: z.number().positive("Bar quantity must be a positive number"),
   created_by: z.string().optional(),
 })
 
@@ -67,10 +62,7 @@ export const AnalysisEditSchema = z.object({
   lot_number_analysis: z.string().min(1, "Lot number analysis is required"),
   date: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid date format"),
   time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/, "Invalid time format"),
-  bar_qty: z
-    .string()
-    .min(1, "Bar quantity is required")
-    .regex(/^\d+$/, "Bar quantity must be a positive number"),
+  bar_qty: z.number().positive("Bar quantity must be a positive number"),
 })
 
 export type AnalysisEditFormData = z.infer<typeof AnalysisEditSchema>
