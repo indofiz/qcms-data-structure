@@ -7,9 +7,8 @@ import { api, incoming_url } from '../../../shared/services'
 import { filterFalsyParams } from '../../../shared/utils'
 
 import type {
-  IncomingFormData,
-  IncomingApproveFormData,
   IncomingEditFormData,
+  IncomingChangeStatusFormData,
 } from '../types/incoming.type'
 
 // Get all incoming materials with filtering and pagination
@@ -35,27 +34,17 @@ export const getIncomingById = async (id: number) => {
   }
 }
 
-// Create new incoming material
-export const createIncoming = async (data: IncomingFormData) => {
+// Create new incoming material with FormData
+export const createIncoming = async (data: FormData) => {
   try {
-    const response = await api.post(incoming_url, data)
+    const response = await api.post(incoming_url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     return response.data
   } catch (error) {
     console.error('Error creating incoming material:', error)
-    throw error
-  }
-}
-
-// Approve/Reject incoming material
-export const approveIncoming = async (
-  id: number,
-  data: IncomingApproveFormData
-) => {
-  try {
-    const response = await api.patch(`${incoming_url}/${id}/approve`, data)
-    return response.data
-  } catch (error) {
-    console.error('Error approving/rejecting incoming material:', error)
     throw error
   }
 }
@@ -70,6 +59,20 @@ export const updateIncoming = async (
     return response.data
   } catch (error) {
     console.error('Error updating incoming material:', error)
+    throw error
+  }
+}
+
+// Change incoming material status
+export const changeIncomingStatus = async (
+  id: number,
+  data: IncomingChangeStatusFormData
+) => {
+  try {
+    const response = await api.patch(`${incoming_url}/${id}/status`, data)
+    return response.data
+  } catch (error) {
+    console.error('Error changing incoming material status:', error)
     throw error
   }
 }

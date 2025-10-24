@@ -75,6 +75,7 @@ export const dashboard_stats_url = '/dashboard/stats'
 export const packing_list_url = '/packing-lists'
 export const release_order_url = '/release-orders'
 export const delivery_order_url = '/delivery-orders'
+export const ordering_goods_url = '/ordering-goods'
 
 // Plant-Solder endpoints
 export const production_request_order_url = '/production-request-orders'
