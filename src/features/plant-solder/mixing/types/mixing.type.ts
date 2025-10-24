@@ -1,5 +1,4 @@
 import z from "zod"
-import type { UserBasicTypes, UserTypes } from "../../../../shared/types/user.type"
 
 // LIST DATA MIXING (GET ALL METHOD)
 export type MixingType = {
@@ -14,7 +13,7 @@ export type MixingType = {
   actual_motor: number
   qty: number
   created_at: string
-  created_by: UserTypes
+  updated_at: string
 }
 
 // DETAIL DATA MIXING (GET BY ID METHOD)
@@ -31,46 +30,20 @@ export type MixingDetailType = {
   qty: number
   created_at: string
   updated_at: string
-  created_by: UserBasicTypes
 }
 
 // DATA SUBMIT MIXING (POST METHOD)
 export const MixingCreateSchema = z.object({
   lot_number: z.string().min(1, "Lot number is required"),
   lot_number_mixing: z.string().min(1, "Lot number mixing is required"),
-  duration: z
-    .string()
-    .min(1, "Duration is required")
-    .regex(/^\d+(\.\d+)?$/, "Duration must be a positive number"),
-  quantity_kg: z
-    .string()
-    .min(1, "Quantity is required")
-    .regex(/^\d+(\.\d+)?$/, "Quantity must be a positive number"),
-  actual_duration: z
-    .string()
-    .min(1, "Actual duration is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual duration must be a positive number"),
-  temperature: z
-    .string()
-    .min(1, "Temperature is required")
-    .regex(/^\d+(\.\d+)?$/, "Temperature must be a positive number"),
-  actual_temperature: z
-    .string()
-    .min(1, "Actual temperature is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual temperature must be a positive number"),
-  motor_scale: z
-    .string()
-    .min(1, "Motor scale is required")
-    .regex(/^\d+(\.\d+)?$/, "Motor scale must be a positive number"),
-  actual_motor: z
-    .string()
-    .min(1, "Actual motor is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual motor must be a positive number"),
-  qty: z
-    .string()
-    .min(1, "Quantity is required")
-    .regex(/^\d+(\.\d+)?$/, "Quantity must be a positive number"),
-  created_by: z.string().optional(),
+  duration: z.number().positive("Duration must be a positive number"),
+  quantity_kg: z.number().positive("Quantity must be a positive number"),
+  actual_duration: z.string().min(1, "Actual duration is required"),
+  temperature: z.number().positive("Temperature must be a positive number"),
+  actual_temperature: z.number().positive("Actual temperature must be a positive number"),
+  motor_scale: z.number().positive("Motor scale must be a positive number"),
+  actual_motor: z.number().positive("Actual motor must be a positive number"),
+  qty: z.number().positive("Quantity must be a positive number"),
 })
 
 export type MixingFormData = z.infer<typeof MixingCreateSchema>
@@ -86,38 +59,14 @@ export type MixingBulkFormData = z.infer<typeof MixingBulkCreateSchema>
 export const MixingEditSchema = z.object({
   lot_number: z.string().min(1, "Lot number is required"),
   lot_number_mixing: z.string().min(1, "Lot number mixing is required"),
-  duration: z
-    .string()
-    .min(1, "Duration is required")
-    .regex(/^\d+(\.\d+)?$/, "Duration must be a positive number"),
-  quantity_kg: z
-    .string()
-    .min(1, "Quantity is required")
-    .regex(/^\d+(\.\d+)?$/, "Quantity must be a positive number"),
-  actual_duration: z
-    .string()
-    .min(1, "Actual duration is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual duration must be a positive number"),
-  temperature: z
-    .string()
-    .min(1, "Temperature is required")
-    .regex(/^\d+(\.\d+)?$/, "Temperature must be a positive number"),
-  actual_temperature: z
-    .string()
-    .min(1, "Actual temperature is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual temperature must be a positive number"),
-  motor_scale: z
-    .string()
-    .min(1, "Motor scale is required")
-    .regex(/^\d+(\.\d+)?$/, "Motor scale must be a positive number"),
-  actual_motor: z
-    .string()
-    .min(1, "Actual motor is required")
-    .regex(/^\d+(\.\d+)?$/, "Actual motor must be a positive number"),
-  qty: z
-    .string()
-    .min(1, "Quantity is required")
-    .regex(/^\d+(\.\d+)?$/, "Quantity must be a positive number"),
+  duration: z.number().positive("Duration must be a positive number"),
+  quantity_kg: z.number().positive("Quantity must be a positive number"),
+  actual_duration: z.string().min(1, "Actual duration is required"),
+  temperature: z.number().positive("Temperature must be a positive number"),
+  actual_temperature: z.number().positive("Actual temperature must be a positive number"),
+  motor_scale: z.number().positive("Motor scale must be a positive number"),
+  actual_motor: z.number().positive("Actual motor must be a positive number"),
+  qty: z.number().positive("Quantity must be a positive number"),
 })
 
 export type MixingEditFormData = z.infer<typeof MixingEditSchema>
