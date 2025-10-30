@@ -1,12 +1,15 @@
 import type { StatusIncomingType } from "./status-incoming.type";
 
-export type IncomingFilterType = {
-  search?: string
-  status?: StatusIncomingType | ''
-  start_date?: string
-  end_date?: string
-  page?: number
-  per_page?: number
-  created_at_order?: 'ASC' | 'DESC'
-  plant?: string
+/**
+ * Filter State Interface
+ */
+export interface IncomingFilterState {
+  search: string;
+  page: number | string;
+  per_page: number | string;
+  created_at_order: 'ASC' | 'DESC';
+  status: string; // StatusIncomingType or comma-separated values
+  start_date: string;
+  end_date: string;
+  plant: string;
 }

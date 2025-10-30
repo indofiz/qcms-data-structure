@@ -1,68 +1,63 @@
 /**
- * Incoming Filter Store
+ * Incoming Quality Check Filter Store
  *
- * Simple Zustand store for managing incoming list filter state.
+ * Simple Zustand store for managing incoming quality check list filter state.
  * Use this with React Query hooks for API filtering.
  */
 
 import { create } from 'zustand';
-import type { IncomingFilterState } from '../types/incoming-filter.type';
+import type { IncomingQualityCheckFilterState } from '../types/incoming-quality-check-filter.type';
 
 /**
  * Store Actions
  */
-export interface IncomingFilterActions {
+export interface IncomingQualityCheckFilterActions {
   setSearch: (search: string) => void;
   setPage: (page: number | string) => void;
   setPerPage: (per_page: number | string) => void;
-  setStatus: (status: string) => void;
   setStartDate: (start_date: string) => void;
   setEndDate: (end_date: string) => void;
-  setPlant: (plant: string) => void;
   setCreatedAtOrder: (order: 'ASC' | 'DESC') => void;
-  setFilters: (filters: Partial<IncomingFilterState>) => void;
+  setFilters: (filters: Partial<IncomingQualityCheckFilterState>) => void;
   resetFilters: () => void;
 }
 
 /**
  * Complete Store Type
  */
-export type IncomingFilterStore = IncomingFilterState & IncomingFilterActions;
+export type IncomingQualityCheckFilterStore = IncomingQualityCheckFilterState & IncomingQualityCheckFilterActions;
 
 /**
  * Default filter values
  */
-const defaultFilters: IncomingFilterState = {
+const defaultFilters: IncomingQualityCheckFilterState = {
   search: '',
   page: 1,
   per_page: 10,
   created_at_order: 'DESC',
-  status: '',
   start_date: '',
   end_date: '',
-  plant: '',
 };
 
 /**
- * Incoming Filter Store
+ * Incoming Quality Check Filter Store
  *
  * @example
  * ```tsx
  * // Get all state and actions
- * const { search, page, status, setSearch, setPage, resetFilters } = useIncomingFilterStore();
+ * const { search, page, setSearch, setPage, resetFilters } = useIncomingQualityCheckFilterStore();
  *
  * // Use with React Query
- * const filters = useIncomingFilterStore((state) => ({
+ * const filters = useIncomingQualityCheckFilterStore((state) => ({
  *   search: state.search,
  *   page: state.page,
  *   per_page: state.per_page,
- *   status: state.status,
  *   created_at_order: state.created_at_order,
  * }));
- * const { data } = useGetIncomings({ filter: filters });
+ * const { data } = useGetIncomingQualityChecks({ filter: filters });
  * ```
  */
-export const useIncomingFilterStore = create<IncomingFilterStore>((set) => ({
+export const useIncomingQualityCheckFilterStore = create<IncomingQualityCheckFilterStore>((set) => ({
   // State
   ...defaultFilters,
 
@@ -70,10 +65,8 @@ export const useIncomingFilterStore = create<IncomingFilterStore>((set) => ({
   setSearch: (search) => set({ search }),
   setPage: (page) => set({ page }),
   setPerPage: (per_page) => set({ per_page }),
-  setStatus: (status) => set({ status }),
   setStartDate: (start_date) => set({ start_date }),
   setEndDate: (end_date) => set({ end_date }),
-  setPlant: (plant) => set({ plant }),
   setCreatedAtOrder: (created_at_order) => set({ created_at_order }),
   setFilters: (filters) => set((state) => ({ ...state, ...filters })),
   resetFilters: () => set(defaultFilters),

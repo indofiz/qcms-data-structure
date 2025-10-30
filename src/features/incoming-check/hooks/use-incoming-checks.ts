@@ -10,14 +10,14 @@ import type { IncomingCheckType, IncomingCheckDetailType } from '../types/incomi
 import type { ReactQueryParamType } from '../../../shared/types/react-query-param.types'
 
 import type { ResponseListType, ResponseSingleType } from '../../../shared/types/response.type'
-import type { IncomingCheckFilterType } from '../types/incoming-check-filter.type'
+import type { IncomingCheckFilterState } from '../types/incoming-check-filter.type'
 import { useDebounce } from '../../../shared/hooks/use-debounce'
 import { INCOMING_CHECK_QUERY_KEY } from './incoming-check-key'
 
 
 interface IListData {
   config?: ReactQueryParamType
-  filter: IncomingCheckFilterType
+  filter: IncomingCheckFilterState
 }
 
 // **GET**: Get all incoming checks with filtering and pagination

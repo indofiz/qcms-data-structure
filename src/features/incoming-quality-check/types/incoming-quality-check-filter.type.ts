@@ -1,7 +1,7 @@
 /**
  * Filter State Interface
  */
-export interface IncomingCheckFilterState {
+export interface IncomingQualityCheckFilterState {
   search: string;
   page: number | string;
   per_page: number | string;

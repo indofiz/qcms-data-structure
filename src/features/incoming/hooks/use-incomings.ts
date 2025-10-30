@@ -10,14 +10,14 @@ import type { IncomingType, IncomingDetailType } from '../types/incoming.type'
 import type { ReactQueryParamType } from '../../../shared/types/react-query-param.types'
 
 import type { ResponseListType, ResponseSingleType } from '../../../shared/types/response.type'
-import type { IncomingFilterType } from '../types/incoming-filter.type'
+import type { IncomingFilterState } from '../types/incoming-filter.type'
 import { useDebounce } from '../../../shared/hooks/use-debounce'
 import { INCOMING_QUERY_KEY } from './incoming-key'
 
 
 interface IListData {
   config?: ReactQueryParamType
-  filter: IncomingFilterType
+  filter: IncomingFilterState
 }
 
 // **GET**: Get all incoming materials with filtering and pagination

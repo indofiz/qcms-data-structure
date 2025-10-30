@@ -81,13 +81,32 @@ export type IncomingDetailType = {
   supplier: SupplierType
   description: string
   updated_at: string
-  incoming_checks: IncomingCheckType
-  quality_control_check: QualityControlCheckType
-  coa_assesments: CoaAssessmentType[]
-  disposition_raw_material: DispositionRawMaterialType
+  incoming_checks: IncomingCheckType | null
+  quality_control_check: QualityControlCheckType | null
+  coa_assesments: CoaAssessmentType[] | null
+  disposition_raw_material: DispositionRawMaterialType | null
 }
 
-//DATA UPDATE INCOMING (PATCH METHOD)
+// DATA CREATE INCOMING (POST METHOD) - FORMDATA
+export const IncomingCreateSchema = z.object({
+  raw_mat_id: z.string().min(1, 'Raw material ID is required'),
+  supplier_id: z.string().min(1, 'Supplier ID is required'),
+  lot_number: z.string().min(1, 'Lot number is required'),
+  qty: z.number().min(1, 'Quantity must be at least 1'),
+  estimated_date: z.string().min(1, 'Estimated date is required'),
+  coa_photos: z
+    .array(z.any())
+    .min(1, 'At least one COA photo is required')
+    .refine(
+      (files) => files.every((file) => file instanceof File),
+      'All COA photos must be valid files'
+    ),
+  description: z.string().optional(),
+  created_by: z.string().optional(), // Optional for user role != 'superadmin', 'admin'
+})
+export type IncomingCreateFormData = z.infer<typeof IncomingCreateSchema>
+
+//DATA UPDATE INCOMING (PATCH METHOD) 
 export const IncomingEditSchema = z.object({
   raw_mat_id: z.string().optional(),
   supplier_id: z.string().optional(),
@@ -99,7 +118,22 @@ export const IncomingEditSchema = z.object({
 
 export type IncomingEditFormData = z.infer<typeof IncomingEditSchema>
 
-//DATA CHANGE STATUS INCOMING (PATCH METHOD)
+
+
+//DATA ADD MORE COA PHOTOS INCOMING (POST METHOD) - FORMDATA
+export const IncomingAddCoaPhotosSchema = z.object({
+  coa_photos: z
+    .array(z.any())
+    .min(1, 'At least one COA photo is required')
+    .refine(
+      (files) => files.every((file) => file instanceof File),
+      'All COA photos must be valid files'
+    ),
+})
+
+export type IncomingAddCoaPhotosFormData = z.infer<typeof IncomingAddCoaPhotosSchema>
+
+//DATA CHANGE STATUS INCOMING (PATCH METHOD) 
 export const IncomingChangeStatusSchema = z.object({
   status: z.enum([
     "ESTIMATION",
